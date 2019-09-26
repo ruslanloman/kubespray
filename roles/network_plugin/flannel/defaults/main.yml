@@ -26,3 +26,11 @@ flannel_cpu_requests: 150m
 
 # Legacy directory, will be removed if found.
 flannel_cert_dir: /etc/flannel/certs
+
+# Flannel command with args
+flannel_command:
+  - "/opt/bin/flanneld"
+  - "--kube-subnet-mgr"
+  - "--ip-masq={{ flannel_masq | default('true') }}"
+  - "{{ flannel_interface is defined | ternary('--iface=flannel_interface', '') }}"
+  - "{{ flannel_interface_regexp is defined | ternary('--iface-regex=flannel_interface_regexp', '') }}"
